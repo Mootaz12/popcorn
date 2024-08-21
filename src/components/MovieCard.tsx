@@ -1,34 +1,45 @@
 import React from "react";
 import Image from "next/image";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons/faCalendar";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function MovieCard({
   movie,
+  selectedMovie,
   setSelectedMovie,
 }: {
-  movie: any;
+  movie: Movie;
+  selectedMovie: string;
   setSelectedMovie: (selectedMovie: string) => void;
 }) {
   const handleSelectingMovie = () => {
-    setSelectedMovie(movie.imdbID);
+    if (selectedMovie === movie.imdbID) {
+      setSelectedMovie("");
+    } else {
+      setSelectedMovie(movie.imdbID);
+    }
   };
   return (
-    <div className="flex flex-row items-center justify-start gap-4 p-4 border-b-bgColor border-b-2">
+    <div className="relative flex flex-row items-center justify-start gap-4 border-b-2 border-b-bgColor p-4">
       <Image
-        src={movie.Poster && movie.Poster}
+        src={
+          (movie.Poster &&
+            movie.Poster !== "N/A" &&
+            movie.Poster.startsWith("http") &&
+            movie.Poster) ||
+          ""
+        }
         alt={movie.Title}
         width={70}
         height={70}
-        priority
       />
       <div className="flex flex-col">
         <p
-          className="text-white text-lg cursor-pointer"
+          className="cursor-pointer text-lg text-white"
           onClick={handleSelectingMovie}
         >
           {movie.Title}
         </p>
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row items-center gap-2">
           <FontAwesomeIcon icon={faCalendar} className="text-white" />
           <p className="text-white">{movie.Year}</p>
         </div>

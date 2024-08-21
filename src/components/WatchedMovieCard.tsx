@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
   faRankingStar,
@@ -12,13 +12,13 @@ function WatchedMovieCard({
   watchedMovies,
   setWatchedMovies,
 }: {
-  watchedMovie: any;
-  watchedMovies: any[];
-  setWatchedMovies: (watchdMovies: any[]) => void;
+  watchedMovie: WatchedMovie;
+  watchedMovies: WatchedMovie[];
+  setWatchedMovies: (watchdMovies: WatchedMovie[]) => void;
 }) {
   const handleDelete = () => {
     const updatedWatchedMovies = watchedMovies.filter(
-      (movie: any) => movie.imdbID !== watchedMovie.imdbID,
+      (movie: Movie) => movie.imdbID !== watchedMovie.imdbID,
     );
     setWatchedMovies(updatedWatchedMovies);
     localStorage.setItem("watchedMovies", JSON.stringify(updatedWatchedMovies));
@@ -33,9 +33,7 @@ function WatchedMovieCard({
         priority
       />
       <div className="flex flex-col">
-        <p className="cursor-pointer text-lg text-white">
-          {watchedMovie.Title}
-        </p>
+        <p className="text-lg text-white">{watchedMovie.Title}</p>
         <div className="flex flex-row items-center gap-10">
           <p className="flex items-center gap-2 text-white">
             <FontAwesomeIcon icon={faStar} />
